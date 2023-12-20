@@ -53,13 +53,11 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 import test.tck.msgflow.callflows.TestAssertion;
@@ -74,18 +72,11 @@ public class AckReTransmissionTest extends ScenarioHarness implements SipListene
 
     private Shootme shootme;
 
-    private static Logger logger = Logger.getLogger("test.tck");
-
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+    private static Logger logger = LogManager.getLogger("test.tck");
 
      class Shootme  implements SipListener {
 
-
             private ProtocolObjects  protocolObjects;
-
 
             // To run on two machines change these to suit.
             public static final String myAddress = "127.0.0.1";

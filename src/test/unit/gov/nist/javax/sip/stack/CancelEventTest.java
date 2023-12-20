@@ -1,7 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
@@ -39,12 +37,13 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.Logger;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-
 import test.tck.msgflow.callflows.ScenarioHarness;
 import test.tck.msgflow.callflows.TestAssertion;
 
@@ -59,12 +58,7 @@ public class CancelEventTest extends  ScenarioHarness {
 
     private int peerPort = NetworkPortAssigner.retrieveNextPort();
 
-    private static Logger logger = Logger.getLogger("test.tck");
-
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+    private static Logger logger = LogManager.getLogger("test.tck");
 
     public CancelEventTest() {
         super("CanceEventTest",true);

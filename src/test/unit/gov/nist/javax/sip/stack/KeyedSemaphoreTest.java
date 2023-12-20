@@ -1,8 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.javax.sip.stack.KeyedSemaphore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,6 +8,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import gov.nist.core.CommonLogger;
+import gov.nist.core.StackLogger;
+import gov.nist.javax.sip.stack.KeyedSemaphore;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -143,7 +143,6 @@ public class KeyedSemaphoreTest extends TestCase{
     }
 
     public void testSunnyOnly() throws Exception {
-        org.apache.log4j.BasicConfigurator.configure();
         ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(THREAD_NUM);
         KeyedSemaphore sem = new KeyedSemaphore();
         final String key = "key";
@@ -160,7 +159,6 @@ public class KeyedSemaphoreTest extends TestCase{
     }
 
     public void testRainyOnly() throws Exception {
-        org.apache.log4j.BasicConfigurator.configure();
         ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(THREAD_NUM);
         final KeyedSemaphore sem = new KeyedSemaphore();
         final String key = "key";

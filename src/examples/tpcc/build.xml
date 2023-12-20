@@ -9,10 +9,12 @@
 	<property file="${root}/ant-build-config.properties" />
 	<property name="classes" value="${root}/classes" />
 	<property name="srcroot" value="${root}/src" />
-	<property name="log4j_jar" value="${root}/lib/${log4j}" />
+	<property name = "log4j_api_jar" value="${root}/lib/${log4j-api}" />
+    <property name = "log4j_core_jar" value="${root}/lib/${log4j-core}" />
 	<path id="project.class.path">
 		<pathelement location="${classes}" />
-		<pathelement location="${log4j_jar}" />
+		<pathelement location="${log4j_core_jar}"/>
+		<pathelement location="${log4j_api_jar}"/>
 	</path>
 	<target name="make">
 		<javac debug="${javac.debug}"

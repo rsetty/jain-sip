@@ -1,19 +1,30 @@
 package test.tck.factory;
 
 // import gov.nist.javax.sip.header.*;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.ParseException;
+// import gov.nist.core.*;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.TimeZone;
 
 import javax.sip.address.SipURI;
 import javax.sip.address.TelURL;
 import javax.sip.address.URI;
-import javax.sip.header.*;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.DateHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.Header;
+import javax.sip.header.Parameters;
 
-import org.apache.log4j.Logger;
-// import gov.nist.core.*;
-import java.util.*;
-import java.text.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import test.tck.*;
+import test.tck.TckInternalError;
+import test.tck.TiUnexpectedError;
 
 /**
  * Generate header test cases based on RI. This assumes the correctness
@@ -23,7 +34,7 @@ import test.tck.*;
 
 public class HeaderFactoryTest extends FactoryTestHarness {
 
-    private static Logger logger = Logger.getLogger(HeaderFactoryTest.class);
+    private static Logger logger = LogManager.getLogger(HeaderFactoryTest.class);
 
     // Header definitions for valid headers.
 

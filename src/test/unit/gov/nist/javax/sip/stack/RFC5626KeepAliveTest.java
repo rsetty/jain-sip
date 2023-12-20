@@ -1,18 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.IOExceptionEventExt;
-import gov.nist.javax.sip.IOExceptionEventExt.Reason;
-import gov.nist.javax.sip.ListeningPointExt;
-import gov.nist.javax.sip.ListeningPointImpl;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
-import gov.nist.javax.sip.stack.MessageProcessor;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.TCPMessageChannel;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EventObject;
@@ -47,11 +34,23 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.Logger;
-import static test.tck.TestHarness.assertTrue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.IOExceptionEventExt;
+import gov.nist.javax.sip.IOExceptionEventExt.Reason;
+import gov.nist.javax.sip.ListeningPointExt;
+import gov.nist.javax.sip.ListeningPointImpl;
+import gov.nist.javax.sip.SipListenerExt;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageChannel;
+import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
+import gov.nist.javax.sip.stack.MessageProcessor;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
+import gov.nist.javax.sip.stack.TCPMessageChannel;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 import test.tck.msgflow.callflows.TestAssertion;
@@ -71,13 +70,7 @@ public class RFC5626KeepAliveTest extends ScenarioHarness implements SipListener
     
     private static final int TIMEOUT = 50000;    
 
-    private static Logger logger = Logger.getLogger("test.tck");
-
-    static {
-        if (!logger.isAttached(console)) {
-            logger.addAppender(console);
-        }
-    }
+    private static Logger logger = LogManager.getLogger("test.tck");
 
     class Shootme  implements SipListenerExt {
 

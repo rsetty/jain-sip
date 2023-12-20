@@ -2,7 +2,6 @@ package test.tck.msgflow.callflows.refer;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -11,12 +10,10 @@ import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
 import javax.sip.InvalidArgumentException;
 import javax.sip.ListeningPoint;
-import javax.sip.PeerUnavailableException;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
 import javax.sip.SipException;
-import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
@@ -42,10 +39,8 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
@@ -83,7 +78,7 @@ public class Referee implements SipListener {
 
     protected Dialog dialog;
 
-    private static Logger logger = Logger.getLogger(Referee.class) ;
+    private static Logger logger = LogManager.getLogger(Referee.class) ;
 
     private boolean tryingSent;
 
@@ -91,15 +86,6 @@ public class Referee implements SipListener {
 
     private String transport;
 
-    static {
-        try {
-            logger.setLevel(Level.INFO);
-            logger.addAppender(new FileAppender(new SimpleLayout(),
-                    "logs/refereeoutputlog.txt"));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
     public Referee(ProtocolObjects protObjects) {
         addressFactory = protObjects.addressFactory;
         messageFactory = protObjects.messageFactory;

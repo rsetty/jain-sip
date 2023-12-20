@@ -1,14 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.ServerTransactionExt;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipProviderExt;
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.message.MessageFactoryExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -24,7 +15,6 @@ import javax.sip.ServerTransaction;
 import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.TimeoutEvent;
-import javax.sip.TransactionState;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
 import javax.sip.address.AddressFactory;
@@ -33,7 +23,6 @@ import javax.sip.header.CSeqHeader;
 import javax.sip.header.CallIdHeader;
 import javax.sip.header.ContactHeader;
 import javax.sip.header.ContentTypeHeader;
-import javax.sip.header.ExpiresHeader;
 import javax.sip.header.FromHeader;
 import javax.sip.header.MaxForwardsHeader;
 import javax.sip.header.RouteHeader;
@@ -42,11 +31,17 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import test.unit.gov.nist.javax.sip.stack.CtxExpiredTest.Shootist;
-import test.unit.gov.nist.javax.sip.stack.CtxExpiredTest.Shootme;
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.ServerTransactionExt;
+import gov.nist.javax.sip.SipListenerExt;
+import gov.nist.javax.sip.SipProviderExt;
+import gov.nist.javax.sip.SipStackExt;
+import gov.nist.javax.sip.header.HeaderFactoryExt;
+import gov.nist.javax.sip.message.MessageFactoryExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
@@ -67,10 +62,7 @@ public class DialogEarlyStateTimeoutTest extends TestCase {
 
     private SipStackExt shootmeStack;
 
-    private static Logger logger = Logger.getLogger(CtxExpiredTest.class);
-    static {
-        logger.addAppender(new ConsoleAppender());
-    }
+    private static Logger logger = LogManager.getLogger(CtxExpiredTest.class);
 
     class Shootist implements SipListenerExt {
         private String PEER_ADDRESS;

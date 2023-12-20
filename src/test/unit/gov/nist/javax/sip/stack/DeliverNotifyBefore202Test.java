@@ -41,15 +41,15 @@ import javax.sip.message.Response;
 
 import junit.framework.TestCase;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 
 public class DeliverNotifyBefore202Test extends TestCase {
-    private static Logger logger = Logger.getLogger(DeliverNotifyBefore202Test.class);
+    private static Logger logger = LogManager.getLogger(DeliverNotifyBefore202Test.class);
     private static AddressFactory addressFactory;
 
     private static MessageFactory messageFactory;
@@ -65,10 +65,6 @@ public class DeliverNotifyBefore202Test extends TestCase {
         try {
             sipFactory = SipFactory.getInstance();
             sipFactory.setPathName("gov.nist");
-            logger.setLevel(Level.DEBUG);
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-            logger.addAppender(new FileAppender(new SimpleLayout(), "subscriberoutputlog.txt"));
-
           
             sipFactory.setPathName("gov.nist");
             headerFactory = sipFactory.createHeaderFactory();
@@ -317,9 +313,6 @@ public class DeliverNotifyBefore202Test extends TestCase {
         public Subscriber(int notifierPort, int port) throws Exception {
             this.notifierPort = notifierPort;
             this.port = port;
-            logger.addAppender(new FileAppender(new SimpleLayout(), "subscriberoutputlog_" + port
-                    + ".txt"));
-            
             Properties properties = new Properties();
 
             properties.setProperty("javax.sip.STACK_NAME", "subscriber" + port);
@@ -569,8 +562,6 @@ public class DeliverNotifyBefore202Test extends TestCase {
         public Notifier(int port) throws Exception {
             this.port = port;
             Properties properties = new Properties();
-            logger.addAppender(new FileAppender(new SimpleLayout(), "notifieroutputlog_" + port
-                    + ".txt"));
 
             properties.setProperty("javax.sip.STACK_NAME", "notifier" + port);
             // You need 16 for logging traces. 32 for debug + traces.

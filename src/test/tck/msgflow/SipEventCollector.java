@@ -19,12 +19,21 @@
 */
 package test.tck.msgflow;
 
-import javax.sip.*;
-
-import org.apache.log4j.Logger;
-
 import java.util.TooManyListenersException;
-import test.tck.*;
+
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.TimeoutEvent;
+import javax.sip.TransactionTerminatedEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import test.tck.TckInternalError;
 
 /**
  * <p>
@@ -63,7 +72,7 @@ class SipEventCollector {
 
     private TransactionTerminationCollector transactionTerminationCollector = null;
 
-    private static Logger logger = Logger.getLogger(SipEventCollector.class);
+    private static Logger logger = LogManager.getLogger(SipEventCollector.class);
 
     private void initCollectors(SipProvider sipProvider) {
         this.requestCollector = new RequestCollector(sipProvider);

@@ -7,17 +7,12 @@ import java.util.HashSet;
 
 import javax.sip.SipProvider;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.SimpleLayout;
-import static test.tck.TestHarness.assertTrue;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-import test.tck.msgflow.callflows.TestAssertion;
 
 /**
  * @author M. Ranganathan
@@ -27,20 +22,13 @@ public class InviteTest extends TestCase {
 
     protected Shootist shootist;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
 
-    protected static final Appender console = new ConsoleAppender(new SimpleLayout());
-
-//    private static int forkCount = 2;
-    
     public static final String PREFERRED_SERVICE_VALUE="urn:urn-7:3gpp-service.ims.icsi.mmtel.gsma.ipcall"; 
    
-
     protected HashSet<Shootme> shootme = new HashSet<Shootme>();
     
     private static final int TIMEOUT = 60000;
-
-  
 
     private Proxy proxy;
 

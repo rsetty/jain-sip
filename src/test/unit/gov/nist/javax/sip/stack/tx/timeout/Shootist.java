@@ -15,11 +15,6 @@
  */
 package test.unit.gov.nist.javax.sip.stack.tx.timeout;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
@@ -53,12 +48,14 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
-import test.tck.msgflow.callflows.NetworkPortAssigner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
+import gov.nist.javax.sip.SipListenerExt;
+import gov.nist.javax.sip.SipStackImpl;
+import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 /**
@@ -118,15 +115,7 @@ public class Shootist implements SipListenerExt {
     private Dialog dialog = null;
 	private int statusCode = -1;
 
-    private static Logger logger = Logger.getLogger(Shootist.class);
-
-    static {
-        if (logger.getAllAppenders().equals(NullEnumeration.getInstance())) {
-
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootist.class);
 
     class ByeTask  extends TimerTask {
         Dialog dialog;

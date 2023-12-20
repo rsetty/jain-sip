@@ -1,10 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ResponseEventExt;
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.message.SIPResponse;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Timer;
@@ -46,21 +41,21 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import gov.nist.javax.sip.ResponseEventExt;
+import gov.nist.javax.sip.SipStackImpl;
+import gov.nist.javax.sip.message.SIPResponse;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 
 public class ServerTransactionRetransmissionTimerTest extends TestCase {
     public static final boolean callerSendsBye = true;
 
-    private static Logger logger = Logger.getLogger( ServerTransactionRetransmissionTimerTest.class);
-    static {
-        if ( ! logger.getAllAppenders().hasMoreElements())
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-    }
+    private static Logger logger = LogManager.getLogger( ServerTransactionRetransmissionTimerTest.class);
+
     class Shootist implements SipListener {
 
         private SipProvider sipProvider;

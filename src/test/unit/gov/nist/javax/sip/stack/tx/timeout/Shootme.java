@@ -15,11 +15,6 @@
  */
 package test.unit.gov.nist.javax.sip.stack.tx.timeout;
 
-import gov.nist.javax.sip.DialogTimeoutEvent;
-import gov.nist.javax.sip.SipListenerExt;
-import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
-import gov.nist.javax.sip.stack.SIPDialog;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,12 +39,13 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
-import test.tck.msgflow.callflows.NetworkPortAssigner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import gov.nist.javax.sip.DialogTimeoutEvent;
+import gov.nist.javax.sip.DialogTimeoutEvent.Reason;
+import gov.nist.javax.sip.SipListenerExt;
+import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 /**
@@ -132,15 +128,7 @@ public class Shootme implements SipListenerExt {
 
     public final int myPort = NetworkPortAssigner.retrieveNextPort();
 
-    private static Logger logger = Logger.getLogger(Shootme.class);
-
-    static {
-        if (logger.getAllAppenders().equals(NullEnumeration.getInstance())) {
-
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     public Shootme(ProtocolObjects protocolObjects) {
         this.protocolObjects = protocolObjects;

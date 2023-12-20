@@ -1,16 +1,34 @@
 package examples.redirect;
 
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogState;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.InvalidArgumentException;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipException;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.Transaction;
+import javax.sip.TransactionState;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.SipURI;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
-import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import junit.framework.TestCase;
 
@@ -46,7 +64,7 @@ public class Shootme extends TestCase implements SipListener {
 
     private int dialogCount;
 
-    private static Logger logger = Logger.getLogger(Shootme.class);
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     class MyTimerTask extends TimerTask {
         Shootme shootme;
@@ -271,7 +289,6 @@ public class Shootme extends TestCase implements SipListener {
 
     public static void main(String args[]) throws Exception {
         Shootme shootme = new Shootme(new ProtocolObjects("shootme", true,"udp",""));
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         shootme.createProvider();
         shootme.sipProvider.addSipListener(shootme);
 

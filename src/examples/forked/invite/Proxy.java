@@ -1,11 +1,7 @@
 package examples.forked.invite;
 
-import gov.nist.javax.sip.address.SipUri;
-
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Properties;
 
 import javax.sip.ClientTransaction;
 import javax.sip.DialogTerminatedEvent;
@@ -14,31 +10,23 @@ import javax.sip.ListeningPoint;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
-import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
-import javax.sip.SipStack;
 import javax.sip.TimeoutEvent;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
-import javax.sip.address.AddressFactory;
 import javax.sip.address.SipURI;
 import javax.sip.header.CSeqHeader;
-import javax.sip.header.HeaderFactory;
 import javax.sip.header.RecordRouteHeader;
 import javax.sip.header.RouteHeader;
-import javax.sip.header.ToHeader;
 import javax.sip.header.ViaHeader;
-import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import junit.framework.TestCase;
 
 /**
  * A very simple forking proxy server.
@@ -67,16 +55,7 @@ public class Proxy extends TestCase implements SipListener {
 
     private static String unexpectedException = "Unexpected exception";
 
-    private static Logger logger = Logger.getLogger(Proxy.class);
-
-    static {
-        try {
-            logger.addAppender(new FileAppender(new SimpleLayout(),
-                    ProtocolObjects.logFileDirectory + "proxlog.txt"));
-        } catch (Exception ex) {
-            throw new RuntimeException("could not open shootistconsolelog.txt");
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Proxy.class);
 
     public void processRequest(RequestEvent requestEvent) {
         try {
@@ -258,7 +237,6 @@ public class Proxy extends TestCase implements SipListener {
 
 
     public static void main(String[] args) throws Exception {
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects.init("proxy",false);
         Proxy proxy = new Proxy();
         proxy.createSipProvider();

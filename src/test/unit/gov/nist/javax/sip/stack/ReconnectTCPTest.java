@@ -22,9 +22,6 @@
  */
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.stack.IOHandler;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,13 +57,14 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import test.tck.msgflow.callflows.AssertUntil;
+import gov.nist.javax.sip.stack.IOHandler;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
-import test.tck.msgflow.callflows.TestAssertion;
 
 /**
  * Non regression test for http://code.google.com/p/mobicents/issues/detail?id=3188
@@ -82,17 +80,11 @@ public class ReconnectTCPTest extends ScenarioHarness implements SipListener {
 
     private Shootme shootme;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
     
     private static final int TIMEOUT = 4000;
 
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
-
      class Shootme  implements SipListener {
-
 
             ProtocolObjects  protocolObjects;
 

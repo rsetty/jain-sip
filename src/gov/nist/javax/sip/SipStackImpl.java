@@ -25,39 +25,6 @@
  */
 package gov.nist.javax.sip;
 
-import gov.nist.core.CommonLogger;
-import gov.nist.core.LogLevels;
-import gov.nist.core.ServerLogger;
-import gov.nist.core.StackLogger;
-import gov.nist.core.ThreadAuditor;
-import gov.nist.core.net.AddressResolver;
-import gov.nist.core.net.DefaultSecurityManagerProvider;
-import gov.nist.core.net.NetworkLayer;
-import gov.nist.core.net.SecurityManagerProvider;
-import gov.nist.core.net.SslNetworkLayer;
-import gov.nist.javax.sip.clientauthutils.AccountManager;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
-import gov.nist.javax.sip.clientauthutils.AuthenticationHelperImpl;
-import gov.nist.javax.sip.clientauthutils.SecureAccountManager;
-import gov.nist.javax.sip.parser.MessageParserFactory;
-import gov.nist.javax.sip.parser.PostParseExecutorServices;
-import gov.nist.javax.sip.parser.StringMsgParser;
-import gov.nist.javax.sip.parser.StringMsgParserFactory;
-import gov.nist.javax.sip.stack.ByteBufferFactory;
-import gov.nist.javax.sip.stack.ClientAuthType;
-import gov.nist.javax.sip.stack.ConnectionOrientedMessageProcessor;
-import gov.nist.javax.sip.stack.DefaultMessageLogFactory;
-import gov.nist.javax.sip.stack.DefaultRouter;
-import gov.nist.javax.sip.stack.MessageProcessor;
-import gov.nist.javax.sip.stack.MessageProcessorFactory;
-import gov.nist.javax.sip.stack.NIOMode;
-import gov.nist.javax.sip.stack.OIOMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPEventInterceptor;
-import gov.nist.javax.sip.stack.SIPMessageValve;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-import gov.nist.javax.sip.stack.timers.DefaultSipTimer;
-import gov.nist.javax.sip.stack.timers.SipTimer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,9 +35,7 @@ import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -91,6 +56,38 @@ import javax.sip.TransportNotSupportedException;
 import javax.sip.address.Router;
 import javax.sip.header.HeaderFactory;
 import javax.sip.message.Request;
+
+import gov.nist.core.CommonLogger;
+import gov.nist.core.LogLevels;
+import gov.nist.core.ServerLogger;
+import gov.nist.core.StackLogger;
+import gov.nist.core.ThreadAuditor;
+import gov.nist.core.net.AddressResolver;
+import gov.nist.core.net.DefaultSecurityManagerProvider;
+import gov.nist.core.net.NetworkLayer;
+import gov.nist.core.net.SecurityManagerProvider;
+import gov.nist.core.net.SslNetworkLayer;
+import gov.nist.javax.sip.clientauthutils.AccountManager;
+import gov.nist.javax.sip.clientauthutils.AuthenticationHelper;
+import gov.nist.javax.sip.clientauthutils.AuthenticationHelperImpl;
+import gov.nist.javax.sip.clientauthutils.SecureAccountManager;
+import gov.nist.javax.sip.parser.MessageParserFactory;
+import gov.nist.javax.sip.parser.PostParseExecutorServices;
+import gov.nist.javax.sip.parser.StringMsgParser;
+import gov.nist.javax.sip.parser.StringMsgParserFactory;
+import gov.nist.javax.sip.stack.ByteBufferFactory;
+import gov.nist.javax.sip.stack.ClientAuthType;
+import gov.nist.javax.sip.stack.DefaultMessageLogFactory;
+import gov.nist.javax.sip.stack.DefaultRouter;
+import gov.nist.javax.sip.stack.MessageProcessor;
+import gov.nist.javax.sip.stack.MessageProcessorFactory;
+import gov.nist.javax.sip.stack.NIOMode;
+import gov.nist.javax.sip.stack.OIOMessageProcessorFactory;
+import gov.nist.javax.sip.stack.SIPEventInterceptor;
+import gov.nist.javax.sip.stack.SIPMessageValve;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
+import gov.nist.javax.sip.stack.timers.DefaultSipTimer;
+import gov.nist.javax.sip.stack.timers.SipTimer;
 
 /**
  * Implementation of SipStack.
@@ -1899,22 +1896,6 @@ public class SipStackImpl extends SIPTransactionStack implements
 	}
 
 	/**
-	 * Set the log appender ( this is useful if you want to specify a particular
-	 * log format or log to something other than a file for example). This method
-	 * is will be removed May 11, 2010 or shortly there after.
-	 *
-	 * @param Appender
-	 *            - the log4j appender to add.
-	 * @deprecated TODO: remove this method May 11, 2010.
-	 */
-	@Deprecated
-	public void addLogAppender(org.apache.log4j.Appender appender) {
-		if (this.logger instanceof gov.nist.core.LogWriter) {
-			((gov.nist.core.LogWriter) this.logger).addAppender(appender);
-		}
-	}
-
-	/**
 	 * Get the log4j logger ( for log stream integration ).
 	 * This method will be removed May 11, 2010 or shortly there after.
 	 *
@@ -1922,7 +1903,7 @@ public class SipStackImpl extends SIPTransactionStack implements
 	 * @deprecated TODO: This method will be removed May 11, 2010.
 	 */
 	@Deprecated
-	public org.apache.log4j.Logger getLogger() {
+	public org.apache.logging.log4j.Logger getLogger() {
 		if (this.logger instanceof gov.nist.core.LogWriter) {
 			return ((gov.nist.core.LogWriter) this.logger).getLogger();
 		}

@@ -1,9 +1,6 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.SipStackImpl;
-
 import java.util.ArrayList;
-import java.util.EventObject;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
@@ -15,7 +12,6 @@ import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
-import javax.sip.TimeoutEvent;
 import javax.sip.Transaction;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.address.Address;
@@ -33,9 +29,11 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.Logger;
-import test.tck.msgflow.callflows.NetworkPortAssigner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import gov.nist.javax.sip.SipStackImpl;
+import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
 import test.tck.msgflow.callflows.ScenarioHarness;
 
@@ -43,12 +41,7 @@ public class SelfroutingTest extends ScenarioHarness {
 
     protected Shootist shootist;
 
-    private static Logger logger = Logger.getLogger("test.tck");
-
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+    private static Logger logger = LogManager.getLogger("test.tck");
 
     class Shootist  implements SipListener {
 

@@ -49,10 +49,8 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
@@ -95,16 +93,7 @@ public class Shootist  implements SipListener {
     private boolean byeSent;
 
 
-    private static Logger logger = Logger.getLogger(Shootist.class);
-
-    static{
-        if (logger.getAllAppenders().equals(NullEnumeration.getInstance())) {
-
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootist.class);
 
     private ProtocolObjects protocolObjects;
 

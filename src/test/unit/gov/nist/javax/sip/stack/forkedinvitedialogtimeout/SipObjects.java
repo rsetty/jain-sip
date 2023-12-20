@@ -1,8 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack.forkedinvitedialogtimeout;
 
-import gov.nist.javax.sip.SipStackImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.Properties;
 
 import javax.sip.SipException;
@@ -11,6 +8,8 @@ import javax.sip.SipStack;
 import javax.sip.address.AddressFactory;
 import javax.sip.header.HeaderFactory;
 import javax.sip.message.MessageFactory;
+
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 
 // import org.sipfoundry.commons.log4j.SipFoundryAppender;
 // import org.sipfoundry.commons.log4j.SipFoundryLayout;

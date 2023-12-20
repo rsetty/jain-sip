@@ -19,7 +19,7 @@ public class Shootist implements SipListener {
     private static SipProvider sipProvider;
 
     private static AddressFactory addressFactory;
-
+    
     private static MessageFactory messageFactory;
 
     private static HeaderFactory headerFactory;

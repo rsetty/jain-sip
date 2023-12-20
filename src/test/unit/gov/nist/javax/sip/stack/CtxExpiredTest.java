@@ -3,13 +3,6 @@ package test.unit.gov.nist.javax.sip.stack;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import gov.nist.javax.sip.ServerTransactionExt;
-import gov.nist.javax.sip.SipProviderExt;
-import gov.nist.javax.sip.SipStackExt;
-import gov.nist.javax.sip.header.HeaderFactoryExt;
-import gov.nist.javax.sip.message.MessageFactoryExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
 import javax.sip.DialogTerminatedEvent;
@@ -33,7 +26,6 @@ import javax.sip.header.ContactHeader;
 import javax.sip.header.ContentTypeHeader;
 import javax.sip.header.ExpiresHeader;
 import javax.sip.header.FromHeader;
-import javax.sip.header.Header;
 import javax.sip.header.MaxForwardsHeader;
 import javax.sip.header.RouteHeader;
 import javax.sip.header.ToHeader;
@@ -41,9 +33,16 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
 
+import gov.nist.javax.sip.ServerTransactionExt;
+import gov.nist.javax.sip.SipProviderExt;
+import gov.nist.javax.sip.SipStackExt;
+import gov.nist.javax.sip.header.HeaderFactoryExt;
+import gov.nist.javax.sip.message.MessageFactoryExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
@@ -65,10 +64,7 @@ public class CtxExpiredTest extends TestCase {
 
     private SipStackExt shootmeStack;
 
-    private static Logger logger = Logger.getLogger(CtxExpiredTest.class);
-    static {
-        logger.addAppender(new ConsoleAppender());
-    }
+    private static Logger logger = LogManager.getLogger(CtxExpiredTest.class);
 
     class Shootist implements SipListener {
         private String PEER_ADDRESS;

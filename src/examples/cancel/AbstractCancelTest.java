@@ -17,13 +17,11 @@ import javax.sip.SipProvider;
 import javax.sip.TimeoutEvent;
 import javax.sip.TransactionTerminatedEvent;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import junit.framework.TestCase;
 
@@ -37,15 +35,7 @@ public abstract class AbstractCancelTest extends TestCase implements SipListener
 
     protected Shootist shootist;
 
-    private static Logger logger = Logger.getLogger(AbstractCancelTest.class);
-
-    static {
-        if (logger.getAllAppenders() instanceof NullEnumeration )
-            PropertyConfigurator.configure("log4j.properties");
-
-
-
-    }
+    private static Logger logger = LogManager.getLogger(AbstractCancelTest.class);
 
     //private Appender appender;
 

@@ -32,10 +32,10 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.TestHarness;
-import static test.tck.TestHarness.assertTrue;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
@@ -48,15 +48,9 @@ public class UdpPrackTimeoutTest extends ScenarioHarness implements SipListener 
 
     protected Shootme shootme;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
     
     private static final int TIMEOUT = 60000;    
-
-    static {
-        if (!logger.isAttached(console)) {
-            logger.addAppender(console);
-        }
-    }
 
     public UdpPrackTimeoutTest() {
         super("reliableResponseTimeout", true);

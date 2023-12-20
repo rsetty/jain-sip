@@ -5,10 +5,10 @@ import javax.sip.address.*;
 import javax.sip.header.*;
 import javax.sip.message.*;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 
@@ -41,17 +41,7 @@ public class Shootme  extends TestCase implements SipListener {
 
     private static String unexpectedException = "Unexpected exception ";
 
-    private static Logger logger = Logger.getLogger(Shootme.class);
-
-    static {
-        try {
-        logger.addAppender(new FileAppender(new SimpleLayout(),
-                    ProtocolObjects.logFileDirectory + "shootmeconsolelog.txt"));
-        //logger.addAppender( new ConsoleAppender(new SimpleLayout()));
-        } catch (Exception ex) {
-            throw new RuntimeException ("could not open log file");
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     class MyTimerTask extends TimerTask {
         RequestEvent  requestEvent;
@@ -290,8 +280,6 @@ public class Shootme  extends TestCase implements SipListener {
 
     public static void main(String args[]) throws Exception {
         int myPort = new Integer(args[0]).intValue();
-
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects.init("shootme_"+myPort,true);
         Shootme shootme = new Shootme(myPort);
         shootme.createProvider();

@@ -24,9 +24,6 @@ package test.unit.gov.nist.javax.sip.stack;
 
 
 
-import gov.nist.javax.sip.message.ResponseExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -67,13 +64,12 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import gov.nist.javax.sip.message.ResponseExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
-
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.NonSipUriRouter;
 
@@ -93,17 +89,7 @@ public class ReInviteInfoAckOverlapTest extends TestCase {
     
     private static int ROUTER_PORT = NetworkPortAssigner.retrieveNextPort();
 
-    protected static final Appender console = new ConsoleAppender(new SimpleLayout());
-
-    protected static Logger logger = Logger.getLogger(ReInviteInfoAckOverlapTest.class);
-    
-    
-
-    static {
-
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+    protected static Logger logger = LogManager.getLogger(ReInviteInfoAckOverlapTest.class);
 
     private static String PEER_ADDRESS = Shootme.myAddress;
 

@@ -1,17 +1,12 @@
 package test.unit.gov.nist.javax.sip.stack;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Properties;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
-import javax.sip.DialogState;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.IOExceptionEvent;
 import javax.sip.ListeningPoint;
@@ -19,7 +14,6 @@ import javax.sip.PeerUnavailableException;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
-import javax.sip.SipException;
 import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
@@ -46,23 +40,20 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import gov.nist.javax.sip.ClientTransactionExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-import test.tck.msgflow.callflows.ProtocolObjects;
 
 
 public class ClientTransactionCallingAlertTest extends TestCase {
     public static final boolean callerSendsBye = true;
 
-    private static Logger logger = Logger.getLogger( ClientTransactionCallingAlertTest.class);
-    static {
-        if ( ! logger.getAllAppenders().hasMoreElements())
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-    }
+    private static Logger logger = LogManager.getLogger( ClientTransactionCallingAlertTest.class);
+
     class Shootist implements SipListener {
 
         private SipProvider sipProvider;

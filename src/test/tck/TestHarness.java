@@ -1,9 +1,5 @@
 package test.tck;
 
-import gov.nist.javax.sip.address.AddressFactoryImpl;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,15 +11,13 @@ import javax.sip.address.AddressFactory;
 import javax.sip.header.HeaderFactory;
 import javax.sip.message.MessageFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import gov.nist.javax.sip.address.AddressFactoryImpl;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
-
-import org.apache.log4j.Appender;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.TestAssertion;
 
@@ -76,14 +70,11 @@ public class TestHarness extends TestCase {
 
     protected TestResult testResult;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
 
     private static String currentMethodName;
 
     private static String currentClassName;
-
-    protected static Appender console = new ConsoleAppender(new SimpleLayout());
-
 
     static {
         try {
@@ -111,15 +102,6 @@ public class TestHarness extends TestCase {
             // JvB: init log4j
             //PropertyConfigurator.configure("log4j.properties");
 
-            BasicConfigurator.configure();
-
-            // If already created a print writer then just use it.
-            if (lf != null)
-                logger.addAppender(new FileAppender(new SimpleLayout(),
-                        logFileName));
-            else
-                logger.addAppender(new FileAppender(new SimpleLayout(),
-                        "tckoutput.txt"));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

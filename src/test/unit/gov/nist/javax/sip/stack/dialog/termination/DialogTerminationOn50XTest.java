@@ -11,10 +11,10 @@ import javax.sip.SipProvider;
 import javax.sip.TimeoutEvent;
 import javax.sip.TransactionTerminatedEvent;
 
-import org.apache.log4j.Logger;
-import static test.tck.TestHarness.assertTrue;
-import test.tck.msgflow.callflows.AssertUntil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.ScenarioHarness;
 import test.tck.msgflow.callflows.TestAssertion;
 
@@ -24,14 +24,9 @@ public class DialogTerminationOn50XTest extends ScenarioHarness implements SipLi
 
     private Shootme shootme;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
     
     private static final int TIMEOUT = 60000;    
-
-    static {
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
 
     private SipListener getSipListener(EventObject sipEvent) {
         SipProvider source = (SipProvider) sipEvent.getSource();

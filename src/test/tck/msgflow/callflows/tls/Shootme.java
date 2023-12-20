@@ -19,15 +19,28 @@
 */
 package test.tck.msgflow.callflows.tls;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.Transaction;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 import test.tck.msgflow.callflows.ProtocolObjects;
@@ -40,9 +53,7 @@ import test.tck.msgflow.callflows.ProtocolObjects;
 
 public class Shootme  implements SipListener {
 
-
     private ProtocolObjects  protocolObjects;
-
 
     // To run on two machines change these to suit.
     public static final String myAddress = "127.0.0.1";
@@ -51,17 +62,7 @@ public class Shootme  implements SipListener {
 
     private ServerTransaction inviteTid;
 
-
-    private static Logger logger = Logger.getLogger(Shootme.class);
-
-    static{
-        if (logger.getAllAppenders().equals(NullEnumeration.getInstance())) {
-
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     private Dialog dialog;
 
@@ -249,7 +250,6 @@ public class Shootme  implements SipListener {
             logger.error(s,ex);
             TlsTest.fail(s);
         }
-
     }
 
     public void processTimeout(javax.sip.TimeoutEvent timeoutEvent) {
@@ -266,21 +266,15 @@ public class Shootme  implements SipListener {
         logger.info("Transaction Time out");
     }
 
-
-
-
     public SipProvider createSipProvider() throws Exception {
         ListeningPoint lp = protocolObjects.sipStack.createListeningPoint(myAddress,
                 myPort, protocolObjects.transport);
-
 
         SipProvider sipProvider = protocolObjects.sipStack.createSipProvider(lp);
         return sipProvider;
     }
 
-
     public static void main(String args[]) throws Exception {
-        logger.addAppender( new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects protocolObjects = new ProtocolObjects("shootme", "gov.nist","udp",true,false, false);
 
         Shootme shootme = new Shootme(protocolObjects);

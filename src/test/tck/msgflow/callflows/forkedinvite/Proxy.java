@@ -23,7 +23,8 @@ import javax.sip.header.ViaHeader;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.TestHarness;
 import test.tck.msgflow.callflows.ProtocolObjects;
@@ -50,7 +51,7 @@ public class Proxy extends TestHarness implements SipListener {
 
     private static String unexpectedException = "Unexpected exception";
 
-    private static Logger logger = Logger.getLogger(Proxy.class);
+    private static Logger logger = LogManager.getLogger(Proxy.class);
 
     private ProtocolObjects protocolObjects;
 

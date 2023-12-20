@@ -1,11 +1,5 @@
 package test.unit.gov.nist.javax.sip.stack.tls;
 
-import gov.nist.javax.sip.ClientTransactionExt;
-import gov.nist.javax.sip.TlsSecurityPolicy;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import gov.nist.javax.sip.stack.SIPTransactionStack;
-
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +39,13 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.ClientTransactionExt;
+import gov.nist.javax.sip.TlsSecurityPolicy;
+import gov.nist.javax.sip.TransactionExt;
+import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
+import gov.nist.javax.sip.stack.SIPTransactionStack;
 import junit.framework.TestCase;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 
 
 public class DeadSocketTlsTest extends TestCase {
@@ -62,11 +56,6 @@ public class DeadSocketTlsTest extends TestCase {
 
 
 	public void setUp() {
-
-		Logger root = Logger.getRootLogger();
-		root.setLevel(Level.DEBUG);
-		root.addAppender(new ConsoleAppender(
-				new PatternLayout(PatternLayout.TTCC_CONVERSION_PATTERN)));
 		// setup TLS properties
 		System.setProperty( "javax.net.ssl.keyStore",  TlsTest.class.getResource("testkeys").getPath() );
 		System.setProperty( "javax.net.ssl.trustStore", TlsTest.class.getResource("testkeys").getPath() );

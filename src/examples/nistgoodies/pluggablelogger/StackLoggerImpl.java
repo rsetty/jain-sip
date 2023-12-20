@@ -1,22 +1,21 @@
 package examples.nistgoodies.pluggablelogger;
 
-import gov.nist.core.StackLogger;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import gov.nist.core.StackLogger;
 
 public class StackLoggerImpl implements StackLogger {
     
-    private static Logger logger = Logger.getLogger(StackLoggerImpl.class) ;
+    private static Logger logger = LogManager.getLogger(StackLoggerImpl.class) ;
     
-    
+     
     private static HashMap<String,Integer> levelMap = new HashMap<String,Integer>();
     
     private static HashMap<Integer,String> inverseLevelMap = new HashMap<Integer,String>();
@@ -35,15 +34,7 @@ public class StackLoggerImpl implements StackLogger {
         putMap(Level.WARN.toString(), new Integer(TRACE_WARN));
         putMap(Level.FATAL.toString(), new Integer(TRACE_FATAL));
         putMap(Level.OFF.toString(), new Integer(TRACE_NONE));
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
-    
-    
-    public StackLoggerImpl( ) {
-        logger.setLevel(Level.DEBUG);
-        logger.addAppender(new ConsoleAppender());
-    }
-    
  
     public static void setLogger(Logger logger) {
         StackLoggerImpl.logger = logger;

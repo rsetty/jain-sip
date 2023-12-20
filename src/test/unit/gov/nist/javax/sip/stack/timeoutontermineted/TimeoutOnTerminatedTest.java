@@ -5,12 +5,10 @@ package test.unit.gov.nist.javax.sip.stack.timeoutontermineted;
 
 import javax.sip.SipProvider;
 
-import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import junit.framework.TestCase;
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 
@@ -24,10 +22,8 @@ public class TimeoutOnTerminatedTest extends TestCase {
 
     protected Shootme shootme;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
 
-    protected static final Appender console = new ConsoleAppender(new SimpleLayout());
-    
     private static final int TIMEOUT = 60000;    
 
     // private Appender appender;

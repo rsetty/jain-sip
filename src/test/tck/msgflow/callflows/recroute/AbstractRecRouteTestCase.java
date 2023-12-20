@@ -5,7 +5,8 @@ import java.util.Hashtable;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
@@ -19,10 +20,9 @@ import test.tck.msgflow.callflows.ScenarioHarness;
 public class AbstractRecRouteTestCase extends ScenarioHarness implements
         SipListener {
 
-
     protected Shootist shootist;
 
-    private static Logger logger = Logger.getLogger("test.tck");
+    private static Logger logger = LogManager.getLogger("test.tck");
 
 
     protected Shootme shootme;
@@ -30,11 +30,6 @@ public class AbstractRecRouteTestCase extends ScenarioHarness implements
     private Proxy proxy;
     
     private static final int TIMEOUT = 5000;
-
-    static {
-        if ( !logger.isAttached(console))
-            logger.addAppender(console);
-    }
 
     // private Appender appender;
 

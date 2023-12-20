@@ -5,10 +5,10 @@ import javax.sip.address.*;
 import javax.sip.header.*;
 import javax.sip.message.*;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.FileAppender;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 
@@ -48,22 +48,9 @@ public class Shootist extends TestCase implements SipListener {
 
     private static String unexpectedException = "Unexpected exception ";
 
-    private static Logger logger = Logger.getLogger(Shootist.class);
+    private static Logger logger = LogManager.getLogger(Shootist.class);
 
     private Dialog dialog;
-
-    static {
-        try {
-            logger.addAppender(new FileAppender(new SimpleLayout(),
-                    ProtocolObjects.logFileDirectory + "shootistconsolelog.txt"));
-            logger.addAppender( new ConsoleAppender(new SimpleLayout()));
-        } catch (Exception ex) {
-            throw new RuntimeException("could not open shootistconsolelog.txt");
-        }
-    }
-
-
-
 
     public void processRequest(RequestEvent requestReceivedEvent) {
         Request request = requestReceivedEvent.getRequest();
@@ -334,7 +321,6 @@ public class Shootist extends TestCase implements SipListener {
 
 
     public static void main(String args[]) throws Exception {
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects.init("shootist",true);
         Shootist shootist = new Shootist();
         shootist.createSipProvider();

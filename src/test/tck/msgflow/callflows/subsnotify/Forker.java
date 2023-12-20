@@ -19,22 +19,44 @@
 */
 package test.tck.msgflow.callflows.subsnotify;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import javax.sip.ClientTransaction;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.InvalidArgumentException;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipException;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.Transaction;
+import javax.sip.TransactionState;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.FromHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.RecordRouteHeader;
+import javax.sip.header.RouteHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.Message;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.msgflow.callflows.ProtocolObjects;
-
-import java.text.ParseException;
-
-import java.util.*;
 
 /**
  * This implements a simple forking proxy to test proper handling of multiple
@@ -71,15 +93,7 @@ public class Forker implements SipListener {
      */
     private static boolean nonRFC3261Proxy;
 
-    private static Logger logger = Logger.getLogger(Forker.class);
-    static {
-        try {
-            logger.addAppender(new FileAppender(new SimpleLayout(),
-                    "logs/forkeroutputlog.txt"));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Forker.class);
 
     /**
      * Adds a suitable Record-Route header to the given request or response

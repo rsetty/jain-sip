@@ -5,9 +5,9 @@ import javax.sip.address.*;
 import javax.sip.header.*;
 import javax.sip.message.*;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.*;
 
@@ -40,7 +40,7 @@ public class Shootme extends TestCase implements SipListener {
 
     private Dialog dialog;
 
-    private static Logger logger = Logger.getLogger(Shootme.class);
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     private static final String unexpectedException = "Unexpected Exception ";
 
@@ -246,7 +246,6 @@ public class Shootme extends TestCase implements SipListener {
 
 
     public static void main(String args[])throws Exception  {
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects.init("shootme");
         Shootme shootme = new Shootme();
         shootme.createProvider();

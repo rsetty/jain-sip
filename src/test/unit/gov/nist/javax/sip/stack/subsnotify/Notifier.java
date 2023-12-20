@@ -1,20 +1,49 @@
 package test.unit.gov.nist.javax.sip.stack.subsnotify;
 
+import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.PeerUnavailableException;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipFactory;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.Transaction;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.EventHeader;
+import javax.sip.header.ExpiresHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.SubscriptionStateHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import gov.nist.javax.sip.ResponseEventExt;
 import gov.nist.javax.sip.message.MessageExt;
 import gov.nist.javax.sip.message.ResponseExt;
 import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
-
-import java.util.*;
-
 import junit.framework.TestCase;
-
-import org.apache.log4j.*;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 
 /**
@@ -42,7 +71,7 @@ public class Notifier implements SipListener {
     protected SipProvider udpProvider;
 
   
-    private static Logger logger = Logger.getLogger(Notifier.class) ;
+    private static Logger logger = LogManager.getLogger(Notifier.class) ;
 
     protected int notifyCount = 0;
 
@@ -242,9 +271,6 @@ public class Notifier implements SipListener {
         sipFactory.setPathName("gov.nist");
         Properties properties = new Properties();
 
-        logger.addAppender(new FileAppender
-            ( new SimpleLayout(),"notifieroutputlog_" + port + ".txt" ));
-
         properties.setProperty("javax.sip.STACK_NAME", "notifier" + port );
         // You need 16 for logging traces. 32 for debug + traces.
         // Your code will limp at 32 but it is best for debugging.
@@ -285,9 +311,7 @@ public class Notifier implements SipListener {
     }
 
     public void createProvider() {
-
         try {
-
             ListeningPoint lp = sipStack.createListeningPoint("127.0.0.1",
                     this.port, "udp");
 
@@ -319,7 +343,6 @@ public class Notifier implements SipListener {
 
     public static Notifier createNotifier() throws Exception {
         int port = NetworkPortAssigner.retrieveNextPort();
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         initFactories( port );
         Notifier notifier = new Notifier( port );
         notifier.createProvider( );

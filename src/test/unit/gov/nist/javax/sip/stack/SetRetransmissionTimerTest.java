@@ -1,33 +1,59 @@
 package test.unit.gov.nist.javax.sip.stack;
 
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogState;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.PeerUnavailableException;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipException;
+import javax.sip.SipFactory;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.Transaction;
+import javax.sip.TransactionState;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.Header;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import gov.nist.javax.sip.ResponseEventExt;
 import gov.nist.javax.sip.TransactionExt;
 import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-import junit.framework.TestCase;
-
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
-
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-
-import java.text.ParseException;
-import java.util.*;
-
 import junit.framework.TestCase;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
 
 public class SetRetransmissionTimerTest extends TestCase {
     public static final boolean callerSendsBye = true;
 
-    private static Logger logger = Logger.getLogger( ServerTransactionRetransmissionTimerTest.class);
-    static {
-        if ( ! logger.getAllAppenders().hasMoreElements())
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-    }
+    private static Logger logger = LogManager.getLogger( ServerTransactionRetransmissionTimerTest.class);
+
     class Shootist implements SipListener {
 
         private SipProvider sipProvider;

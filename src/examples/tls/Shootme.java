@@ -1,7 +1,4 @@
 package examples.tls;
-import gov.nist.javax.sip.TransactionExt;
-import gov.nist.javax.sip.stack.NioMessageProcessorFactory;
-
 import java.security.cert.Certificate;
 import java.util.Properties;
 
@@ -31,6 +28,7 @@ import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 
+import gov.nist.javax.sip.TransactionExt;
 import test.unit.gov.nist.javax.sip.stack.tls.TlsTest;
 
 /**

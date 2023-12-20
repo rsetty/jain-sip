@@ -1,18 +1,44 @@
 package examples.tpcc;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
-
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-
-import java.util.*;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.InvalidArgumentException;
+import javax.sip.ListeningPoint;
+import javax.sip.PeerUnavailableException;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipFactory;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.SipStack;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
+import javax.sip.address.SipURI;
+import javax.sip.header.AllowHeader;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.CallIdHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.FromHeader;
+import javax.sip.header.HeaderFactory;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.MessageFactory;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The Click to dial third party call controller flow IV application.
@@ -70,7 +96,7 @@ public class Controller4 implements SipListener {
     private Dialog firstDialog;
 
     private Dialog secondDialog;
-    private static Logger logger = Logger.getLogger(Controller4.class);
+    private static Logger logger = LogManager.getLogger(Controller4.class);
 
     private String auser = "AGuy";
 
@@ -353,10 +379,6 @@ public class Controller4 implements SipListener {
                 "controllerlog.txt");
         properties.setProperty("gov.nist.javax.sip.TRACE_LEVEL", "DEBUG");
         properties.setProperty("gov.nist.javax.sip.LOG_MESSAGE_CONTENT", "true");
-
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-        logger.addAppender(new FileAppender(new SimpleLayout(),
-                "controllerconsolelog.txt"));
 
         try {
             sipStack = sipFactory.createSipStack(properties);

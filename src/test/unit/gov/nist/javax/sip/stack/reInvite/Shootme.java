@@ -19,19 +19,33 @@
 */
 package test.unit.gov.nist.javax.sip.stack.reInvite;
 
-import gov.nist.javax.sip.DialogExt;
+import javax.sip.ClientTransaction;
+import javax.sip.Dialog;
+import javax.sip.DialogTerminatedEvent;
+import javax.sip.IOExceptionEvent;
+import javax.sip.ListeningPoint;
+import javax.sip.RequestEvent;
+import javax.sip.ResponseEvent;
+import javax.sip.ServerTransaction;
+import javax.sip.SipListener;
+import javax.sip.SipProvider;
+import javax.sip.Transaction;
+import javax.sip.TransactionTerminatedEvent;
+import javax.sip.address.Address;
+import javax.sip.address.SipURI;
+import javax.sip.header.CSeqHeader;
+import javax.sip.header.ContactHeader;
+import javax.sip.header.ContentTypeHeader;
+import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ToHeader;
+import javax.sip.header.ViaHeader;
+import javax.sip.message.Request;
+import javax.sip.message.Response;
 
-import javax.sip.*;
-import javax.sip.address.*;
-import javax.sip.header.*;
-import javax.sip.message.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
-import org.apache.log4j.helpers.NullEnumeration;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
-
 import test.tck.msgflow.callflows.ProtocolObjects;
 
 /**
@@ -53,17 +67,7 @@ public class Shootme  implements SipListener {
 
     private ServerTransaction inviteTid;
 
-
-    private static Logger logger = Logger.getLogger(Shootme.class);
-
-    static{
-        if (logger.getAllAppenders().equals(NullEnumeration.getInstance())) {
-
-            logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger(Shootme.class);
 
     private Dialog dialog;
 
@@ -295,9 +299,6 @@ public class Shootme  implements SipListener {
         logger.info("Transaction Time out");
     }
 
-
-
-
     public SipProvider createSipProvider() throws Exception {
         ListeningPoint lp = protocolObjects.sipStack.createListeningPoint(myAddress,
                 myPort, protocolObjects.transport);
@@ -307,9 +308,7 @@ public class Shootme  implements SipListener {
         return sipProvider;
     }
 
-
     public static void main(String args[]) throws Exception {
-        logger.addAppender( new ConsoleAppender(new SimpleLayout()));
         ProtocolObjects protocolObjects = new ProtocolObjects("shootme", "gov.nist","udp",true,false, false);
 
         Shootme shootme = new Shootme(protocolObjects);

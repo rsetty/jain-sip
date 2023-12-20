@@ -8,7 +8,7 @@ import javax.sip.message.*;
 import java.text.ParseException;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 
 
@@ -41,7 +41,7 @@ public class Referee implements SipListener {
 
     protected Dialog dialog;
 
-    private static Logger logger = Logger.getLogger(Referee.class) ;
+    private static Logger logger = LogManager.getLogger(Referee.class) ;
 
     private EventHeader referEvent;
 
@@ -348,9 +348,6 @@ public class Referee implements SipListener {
         SipFactory sipFactory = SipFactory.getInstance();
         sipFactory.setPathName("gov.nist");
         Properties properties = new Properties();
-
-        logger.addAppender(new FileAppender
-            ( new SimpleLayout(),"refereeoutputlog.txt" ));
 
         properties.setProperty("javax.sip.STACK_NAME", "referee" );
         // You need 16 for logging traces. 32 for debug + traces.

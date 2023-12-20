@@ -69,10 +69,10 @@ import javax.sip.message.Response;
 
 import junit.framework.TestCase;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.NetworkPortAssigner;
@@ -94,17 +94,7 @@ public class ReInviteBusyTest extends TestCase {
 
     private ProtocolObjects shootmeProtocolObjs;
 
-    protected static final Appender console = new ConsoleAppender(new SimpleLayout());
-
-    protected static Logger logger = Logger.getLogger(ReInviteBusyTest.class);
-    
-    
-
-    static {
-
-        if (!logger.isAttached(console))
-            logger.addAppender(console);
-    }
+    protected static Logger logger = LogManager.getLogger(ReInviteBusyTest.class);
     
     private static final int TIMEOUT = 10000;
 

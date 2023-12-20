@@ -3,10 +3,8 @@ package test.tck.msgflow.callflows.redirect;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.SimpleLayout;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import test.tck.msgflow.callflows.AssertUntil;
 import test.tck.msgflow.callflows.ScenarioHarness;
@@ -18,29 +16,19 @@ import test.tck.msgflow.callflows.ScenarioHarness;
 public abstract class AbstractRedirectTestCase extends ScenarioHarness implements
         SipListener {
 
-
     protected Shootist shootist;
 
     protected Shootme shootme;
     
     private static final int TIMEOUT = 4000;
 
-    private static Logger logger = Logger.getLogger("test.tck");
-
-    static {
-        if (!logger.isAttached(console)) {
-
-            logger.addAppender(console);
-
-        }
-    }
+    private static Logger logger = LogManager.getLogger("test.tck");
 
     // private Appender appender;
 
     public AbstractRedirectTestCase() {
 
         super("redirect", true);
-
 
     }
 
